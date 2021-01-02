@@ -1,22 +1,23 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
-var cors = require('cors');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-require('dotenv').config();
+
+var cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var moviesRouter = require('./routes/movies');
 
 var app = express();
 
-//Conexion a mongoDB ATlas
+require('dotenv').config();
+
 var mongoose = require('mongoose');
 
-mongoose.connect(process.env.DB_URI, {useNewUrlParser: true, useUnifiedTopology: true})
-  .then(()=> console.log('dbcinema connection succesful'))
-  .catch((err) => console.log(err));
+mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() =>  console.log('dbcinema connection successful'))
+    .catch((err) => console.error(err));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -47,4 +48,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 module.exports = app;
