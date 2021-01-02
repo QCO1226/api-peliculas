@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
+const { findByIdAndDelete } = require('../models/Movie.js');
 var Movie = require('../models/Movie.js');
 
 /* GET the movies listing. */
@@ -37,7 +38,10 @@ router.put('/:id', function(req, res, next) {
 
 /* Delete movie identified by id*/
 router.delete('/:id', function(req, res, next) {
-  res.send('delete movie ' + req.params.id);
+  Movie.findByIdAndDelete(req.params.id, function(err, movieinfo){
+    if (err) res.status(500).send(err);
+    else res.sendStatus(200);
+  })
 });
 
 module.exports = router;
