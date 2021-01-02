@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 require('dotenv').config();
 
-const port = process.env.PORT || 5000;
+const port = (process.env.PORT || 5000);
 
 
 var indexRouter = require('./routes/index');
