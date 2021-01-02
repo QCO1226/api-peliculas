@@ -3,11 +3,19 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+require('dotenv').config();
 
 var indexRouter = require('./routes/index');
 var moviesRouter = require('./routes/movies');
 
 var app = express();
+
+//Conexion a mongoDB ATlas
+var mongoose = require('mongoose');
+
+mongoose.connect(process.env.DB_URI, {useNewUrlParser: true, useUnifiedTopology: true})
+  .then(()=> console.log('dbcinema connection succesful'))
+  .catch((err) => console.log(err));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
